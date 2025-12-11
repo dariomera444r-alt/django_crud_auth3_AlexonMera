@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}Detalle de Actividad - Sistema de Gestión de Actividades TI{% endblock %}
+{% block content %}
+<main class="container-main">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow-lg mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h2 class="mb-2" style="color: var(--primary-color);">
+                                {{ task.title }}
+                            </h2>
+                            <p class="text-muted mb-0">
+                                <small>Creada: {{ task.created|date:"d/m/Y H:i" }}</small>
+                            </p>
+                            {% if task.datecompleted %}
+                                <p class="text-success mb-0">
+                                    <small><strong>Completada: {{ task.datecompleted|date:"d/m/Y H:i" }}</strong></small>
+                                </p>
+                            {% endif %}
+                        </div>
+                        {% if task.important %}
+                            <span class="badge bg-warning text-dark" style="font-size: 0.9rem;">
+                                ⚠️ Importante
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="mb-2">Descripción:</h5>
+                        <p class="text-muted">
+                            {% if task.description %}
+                                {{ task.description|linebreaks }}
+                            {% else %}
+                                <em class="text-muted">Sin descripción</em>
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted">
+                            <strong>Usuario:</strong> {{ task.user.username }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-lg">
+                <div class="card-body p-4">
+                    <h4 class="mb-4" style="color: var(--primary-color);">Editar Actividad</h4>
+
+                    {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Error:</strong> {{ error }}
+                        </div>
+                    {% endif %}
+
+                    <form method="POST" class="mb-4">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="{{ form.title.id_for_label }}" class="form-label">
+                                Título <span class="text-danger">*</span>
+                            </label>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div class="text-danger small mt-1">{{ form.title.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">
+                                Descripción
+                            </label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="text-danger small mt-1">{{ form.description.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check">
+                                {{ form.important }}
+                                <label class="form-check-label" for="{{ form.important.id_for_label }}">
+                                    Marcar como importante
+                                </label>
+                            </div>
+                            {% if form.important.errors %}
+                                <div class="text-danger small mt-1">{{ form.important.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Actualizar Actividad
+                        </button>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex gap-2 flex-wrap">
+                        {% if not task.datecompleted %}
+                            <form action="{% url 'completar_actividad' task.id %}" method="POST" class="flex-grow-1">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success w-100">
+                                    ✅ Marcar como Completada
+                                </button>
+                            </form>
+                        {% endif %}
+                        <form action="{% url 'eliminar_actividad' task.id %}" method="POST" class="flex-grow-1" 
+                              onsubmit="return confirm('¿Está seguro de que desea eliminar esta actividad? Esta acción no se puede deshacer.');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger w-100">
+                                🗑️ Eliminar Actividad
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="{% url 'actividades' %}" class="btn btn-secondary">
+                            ← Volver a Actividades
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+
