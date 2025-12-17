@@ -1,84 +1,338 @@
+<!--inicio.html-->
 {% extends 'base.html' %}
 {% block title %}Inicio - Sistema de Gestión de Actividades TI{% endblock %}
 {% block content %}
 <main class="container-main">
-    <section class="card card-body">
-        <div class="text-center mb-4">
-            <h1 class="display-3 mb-3" style="color: var(--primary-color);">
-                Sistema de Gestión de Actividades
-            </h1>
-            <p class="lead text-muted mb-4">
-                Tecnologías de la Información
-            </p>
+    <!-- Hero Section -->
+    <section class="hero-section mb-5 fade-in">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-6 mb-5 mb-lg-0">
+                <div class="mb-4">
+                    <span class="badge bg-primary bg-opacity-25 text-primary px-3 py-2 mb-3">
+                        <i class="bi bi-star-fill me-1"></i>Sistema Profesional
+                    </span>
+                    <h1 class="display-4 fw-bold mb-3">
+                        Gestiona tus 
+                        <span class="text-gradient">actividades de TI</span> 
+                        como un experto
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        La plataforma definitiva para organizar, priorizar y completar 
+                        tus tareas de tecnología de la información con eficiencia y estilo.
+                    </p>
+                </div>
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'actividades' %}" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Mis Actividades
+                        </a>
+                        <a href="{% url 'crear_actividad' %}" class="btn btn-outline-primary btn-lg px-4">
+                            <i class="bi bi-plus-circle me-2"></i>Nueva Tarea
+                        </a>
+                    {% else %}
+                        <a href="{% url 'registro' %}" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Comenzar Gratis
+                        </a>
+                        <a href="{% url 'iniciar_sesion' %}" class="btn btn-outline-primary btn-lg px-4">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="d-flex align-items-center text-muted">
+                    <i class="bi bi-shield-check me-2 text-success"></i>
+                    <small>Plataforma segura • Sin costos ocultos • Soporte 24/7</small>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="card bg-gradient-dark border-0 overflow-hidden" style="min-height: 400px;">
+                    <div class="card-body p-4 p-md-5 d-flex flex-column">
+                        <div class="mb-4">
+                            <h4 class="text-white mb-3">
+                                <i class="bi bi-dashboard me-2"></i>Panel de Control Demo
+                            </h4>
+                            <p class="text-white-50">
+                                Visualiza cómo organizamos tus actividades
+                            </p>
+                        </div>
+                        
+                        <!-- Dashboard mini -->
+                        <div class="flex-grow-1 d-flex flex-column gap-3">
+                            <!-- Tarea 1 -->
+                            <div class="card bg-dark border border-secondary">
+                                <div class="card-body py-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center me-3" 
+                                             style="width: 40px; height: 40px;">
+                                            <i class="bi bi-server text-white"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1 text-white">Configurar servidor DNS</h6>
+                                            <small class="text-muted">Sistema • Alta prioridad</small>
+                                        </div>
+                                        <span class="badge bg-warning">Hoy</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarea 2 -->
+                            <div class="card bg-dark border border-secondary">
+                                <div class="card-body py-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-success d-flex align-items-center justify-content-center me-3" 
+                                             style="width: 40px; height: 40px;">
+                                            <i class="bi bi-shield-check text-white"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1 text-white">Auditoría de seguridad</h6>
+                                            <small class="text-muted">Seguridad • Completada ✓</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tarea 3 -->
+                            <div class="card bg-dark border border-secondary">
+                                <div class="card-body py-3">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-info d-flex align-items-center justify-content-center me-3" 
+                                             style="width: 40px; height: 40px;">
+                                            <i class="bi bi-database text-white"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1 text-white">Backup de bases de datos</h6>
+                                            <small class="text-muted">Base de datos • Pendiente</small>
+                                        </div>
+                                        <span class="badge bg-secondary">Mañana</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="row g-4 mb-4">
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center">
-                        <div class="mb-3" style="font-size: 3rem; color: var(--primary-color);">
-                            📋
-                        </div>
-                        <h5 class="card-title">Gestión Eficiente</h5>
-                        <p class="card-text text-muted">
-                            Organiza y gestiona tus actividades de manera eficiente y profesional.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center">
-                        <div class="mb-3" style="font-size: 3rem; color: var(--secondary-color);">
-                            ✅
-                        </div>
-                        <h5 class="card-title">Seguimiento Completo</h5>
-                        <p class="card-text text-muted">
-                            Realiza un seguimiento completo de tus tareas pendientes y completadas.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body text-center">
-                        <div class="mb-3" style="font-size: 3rem; color: var(--accent-color);">
-                            🔒
-                        </div>
-                        <h5 class="card-title">Seguro y Privado</h5>
-                        <p class="card-text text-muted">
-                            Tus actividades están protegidas con autenticación segura.
-                        </p>
-                    </div>
-                </div>
-            </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section mb-5">
+        <div class="text-center mb-5 fade-in">
+            <span class="badge bg-primary bg-opacity-25 text-primary px-3 py-2 mb-3">
+                <i class="bi bi-lightning-charge me-1"></i>Características
+            </span>
+            <h2 class="mb-3">Todo lo que necesitas para ser productivo</h2>
+            <p class="text-muted lead">Diseñado específicamente para profesionales de TI</p>
         </div>
 
-        <div class="text-center mt-5">
-            {% if user.is_authenticated %}
-                <a class="btn btn-primary btn-lg me-3" href="{% url 'actividades' %}">
-                    Ver Mis Actividades
-                </a>
-                <a class="btn btn-secondary btn-lg" href="{% url 'crear_actividad' %}">
-                    Crear Nueva Actividad
-                </a>
-            {% else %}
-                <p class="mb-4 text-muted">
-                    Inicia sesión o regístrate para comenzar a gestionar tus actividades
-                </p>
-                <a class="btn btn-primary btn-lg me-3" href="{% url 'iniciar_sesion' %}">
-                    Iniciar Sesión
-                </a>
-                <a class="btn btn-secondary btn-lg" href="{% url 'registro' %}">
-                    Registrarse
-                </a>
-            {% endif %}
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 border-0 hover-lift">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-wrapper mb-4">
+                            <div class="rounded-circle bg-primary bg-opacity-25 d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px;">
+                                <i class="bi bi-kanban text-primary fs-3"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Gestión Visual</h5>
+                        <p class="text-muted mb-0">
+                            Organiza tus tareas en un tablero Kanban intuitivo y visual
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 border-0 hover-lift">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-wrapper mb-4">
+                            <div class="rounded-circle bg-success bg-opacity-25 d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px;">
+                                <i class="bi bi-bell text-success fs-3"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Notificaciones Inteligentes</h5>
+                        <p class="text-muted mb-0">
+                            Recibe alertas sobre tareas importantes y fechas límite
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 border-0 hover-lift">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-wrapper mb-4">
+                            <div class="rounded-circle bg-warning bg-opacity-25 d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px;">
+                                <i class="bi bi-graph-up text-warning fs-3"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Análisis de Productividad</h5>
+                        <p class="text-muted mb-0">
+                            Visualiza tu progreso con reportes y estadísticas detalladas
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="card h-100 border-0 hover-lift">
+                    <div class="card-body p-4 text-center">
+                        <div class="icon-wrapper mb-4">
+                            <div class="rounded-circle bg-info bg-opacity-25 d-inline-flex align-items-center justify-content-center" 
+                                 style="width: 80px; height: 80px;">
+                                <i class="bi bi-shield-lock text-info fs-3"></i>
+                            </div>
+                        </div>
+                        <h5 class="mb-3">Seguridad Avanzada</h5>
+                        <p class="text-muted mb-0">
+                            Encriptación de extremo a extremo para proteger tus datos
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section mb-5">
+        <div class="card bg-gradient-dark border-0">
+            <div class="card-body p-4 p-md-5">
+                <div class="row text-center">
+                    <div class="col-6 col-md-3 mb-4 mb-md-0">
+                        <div class="display-5 fw-bold mb-2 text-white">99.9%</div>
+                        <p class="text-white-50 mb-0">Disponibilidad</p>
+                    </div>
+                    <div class="col-6 col-md-3 mb-4 mb-md-0">
+                        <div class="display-5 fw-bold mb-2 text-white">24/7</div>
+                        <p class="text-white-50 mb-0">Soporte Técnico</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="display-5 fw-bold mb-2 text-white">∞</div>
+                        <p class="text-white-50 mb-0">Actividades Ilimitadas</p>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="display-5 fw-bold mb-2 text-white">0$</div>
+                        <p class="text-white-50 mb-0">Costo Mensual</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section text-center fade-in">
+        <div class="card border-0" style="background: rgba(59, 130, 246, 0.05);">
+            <div class="card-body p-5">
+                <div class="mb-4">
+                    <i class="bi bi-stars fs-1 text-primary mb-3"></i>
+                    <h2 class="mb-3">¿Listo para mejorar tu productividad?</h2>
+                    <p class="text-muted lead mb-4">
+                        Únete a miles de profesionales de TI que ya gestionan sus actividades con nosotros
+                    </p>
+                </div>
+                <div class="d-flex flex-column flex-md-row gap-3 justify-content-center">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'crear_actividad' %}" class="btn btn-primary btn-lg px-5">
+                            <i class="bi bi-plus-circle me-2"></i>Crear Primera Tarea
+                        </a>
+                        <a href="{% url 'actividades_completadas' %}" class="btn btn-outline-primary btn-lg px-5">
+                            <i class="bi bi-bar-chart me-2"></i>Ver Estadísticas
+                        </a>
+                    {% else %}
+                        <a href="{% url 'registro' %}" class="btn btn-primary btn-lg px-5">
+                            <i class="bi bi-rocket-takeoff me-2"></i>Comenzar Gratis
+                        </a>
+                        <a href="{% url 'iniciar_sesion' %}" class="btn btn-outline-primary btn-lg px-5">
+                            <i class="bi bi-play-circle me-2"></i>Ver Demo
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </section>
 </main>
+
+<style>
+    .text-gradient {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+    }
+
+    .hero-section {
+        padding: 2rem 0;
+    }
+
+    .hover-lift {
+        transition: all 0.3s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg) !important;
+    }
+
+    .icon-wrapper {
+        position: relative;
+    }
+
+    .icon-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: rgba(59, 130, 246, 0.1);
+        z-index: 0;
+    }
+
+    .stats-section .display-5 {
+        font-size: 3rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 1rem 0;
+        }
+        
+        .stats-section .display-5 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<script>
+    // Animación para elementos al hacer scroll
+    document.addEventListener('DOMContentLoaded', function() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos los elementos con clase .fade-in
+        document.querySelectorAll('.features-section .card, .cta-section').forEach(el => {
+            observer.observe(el);
+        });
+    });
+</script>
 {% endblock %}
-
-
-
 
 

@@ -1,73 +1,183 @@
+<!--actividades.html-->
 {% extends 'base.html' %}
 {% block title %}Crear Actividad - Sistema de Gestión de Actividades TI{% endblock %}
 {% block content %}
 <main class="container-main">
-    <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8">
-            <div class="card shadow-lg">
-                <div class="card-body p-4">
-                    <div class="text-center mb-4">
-                        <h2 class="mb-2" style="color: var(--primary-color);">Crear Nueva Actividad</h2>
-                        <p class="text-muted">Complete el formulario para registrar una nueva actividad</p>
+    <div class="row justify-content-center fade-in">
+        <div class="col-12 col-lg-8 col-xl-6">
+            <div class="card">
+                <div class="card-body p-4 p-md-5">
+                    <!-- Header con gradiente -->
+                    <div class="text-center mb-5">
+                        <div class="rounded-circle bg-gradient d-inline-flex align-items-center justify-content-center mb-4" 
+                             style="width: 80px; height: 80px; background: var(--gradient-primary);">
+                            <i class="bi bi-plus-lg fs-2 text-white"></i>
+                        </div>
+                        <h1 class="mb-3" style="color: var(--text-primary);">Crear Nueva Actividad</h1>
+                        <p class="text-muted mb-0">
+                            Organiza y gestiona tus tareas de manera eficiente
+                        </p>
                     </div>
 
                     {% if error %}
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Error:</strong> {{ error }}
+                    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <div><strong>Error:</strong> {{ error }}</div>
                         </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
                     {% endif %}
 
-                    <form action="{% url 'crear_actividad' %}" method="POST">
+                    <form action="{% url 'crear_actividad' %}" method="POST" class="needs-validation" novalidate>
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="{{ form.title.id_for_label }}" class="form-label">
-                                Título de la Actividad <span class="text-danger">*</span>
-                            </label>
-                            {{ form.title }}
-                            {% if form.title.errors %}
-                                <div class="text-danger small mt-1">{{ form.title.errors }}</div>
-                            {% endif %}
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="{{ form.description.id_for_label }}" class="form-label">
-                                Descripción
-                            </label>
-                            {{ form.description }}
-                            {% if form.description.errors %}
-                                <div class="text-danger small mt-1">{{ form.description.errors }}</div>
-                            {% endif %}
-                        </div>
-
+                        
+                        <!-- Título -->
                         <div class="mb-4">
-                            <div class="form-check">
-                                {{ form.important }}
-                                <label class="form-check-label" for="{{ form.important.id_for_label }}">
-                                    Marcar como importante
-                                </label>
+                            <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold">
+                                <i class="bi bi-card-heading me-2"></i>Título de la Actividad
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-end-0">
+                                    <i class="bi bi-pencil-square text-primary"></i>
+                                </span>
+                                {{ form.title }}
                             </div>
-                            {% if form.important.errors %}
-                                <div class="text-danger small mt-1">{{ form.important.errors }}</div>
+                            {% if form.title.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.title.errors }}
+                            </div>
                             {% endif %}
+                            <div class="form-text text-muted mt-1">
+                                Un título claro ayuda a identificar rápidamente la tarea
+                            </div>
                         </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{% url 'actividades' %}" class="btn btn-secondary me-md-2">
-                                Cancelar
+                        <!-- Descripción -->
+                        <div class="mb-4">
+                            <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold">
+                                <i class="bi bi-text-paragraph me-2"></i>Descripción Detallada
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-end-0 align-items-start pt-3">
+                                    <i class="bi bi-chat-left-text text-primary"></i>
+                                </span>
+                                {{ form.description }}
+                            </div>
+                            {% if form.description.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.description.errors }}
+                            </div>
+                            {% endif %}
+                            <div class="form-text text-muted mt-1">
+                                Describe los detalles, pasos o consideraciones importantes
+                            </div>
+                        </div>
+
+                        <!-- Importante -->
+                        <div class="mb-5">
+                            <div class="card bg-dark border border-secondary">
+                                <div class="card-body">
+                                    <div class="form-check form-switch">
+                                        {{ form.important }}
+                                        <label class="form-check-label fw-semibold" for="{{ form.important.id_for_label }}">
+                                            <i class="bi bi-exclamation-diamond-fill me-2" style="color: var(--warning);"></i>
+                                            Marcar como actividad importante
+                                        </label>
+                                    </div>
+                                    <div class="form-text text-muted mt-2 ms-4">
+                                        Las actividades importantes se destacan con un indicador especial
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones de acción -->
+                        <div class="d-flex flex-column flex-md-row gap-3 justify-content-between pt-3 border-top border-secondary">
+                            <a href="{% url 'actividades' %}" class="btn btn-outline-secondary btn-lg order-md-1">
+                                <i class="bi bi-arrow-left me-2"></i>Cancelar
                             </a>
-                            <button type="submit" class="btn btn-primary">
-                                Guardar Actividad
+                            <button type="submit" class="btn btn-primary btn-lg flex-grow-1 order-md-0">
+                                <i class="bi bi-save me-2"></i>Guardar Actividad
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
+
+            <!-- Tips Card -->
+            <div class="card mt-4 border-info">
+                <div class="card-body">
+                    <div class="d-flex align-items-start">
+                        <i class="bi bi-lightbulb-fill text-info fs-4 me-3"></i>
+                        <div>
+                            <h6 class="mb-2">Consejos para una buena actividad:</h6>
+                            <ul class="text-muted mb-0 small">
+                                <li>Usa títulos claros y descriptivos</li>
+                                <li>Divide tareas grandes en subtareas más pequeñas</li>
+                                <li>Establece prioridades usando el marcador de importante</li>
+                                <li>Incluye todos los detalles necesarios en la descripción</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
+
+<style>
+    .bg-gradient {
+        background: var(--gradient-primary);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .form-control, .form-control:focus {
+        background: rgba(30, 41, 59, 0.8);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+        padding: 0.875rem 1rem;
+    }
+
+    .form-switch .form-check-input {
+        width: 3em;
+        height: 1.5em;
+        margin-right: 0.5em;
+    }
+
+    .form-switch .form-check-input:checked {
+        background-color: var(--warning);
+        border-color: var(--warning);
+    }
+
+    textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .input-group-text {
+        background: rgba(15, 23, 42, 0.8);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+    }
+</style>
+
+<script>
+    // Validación del formulario
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
 {% endblock %}
-
-
-
-
-
